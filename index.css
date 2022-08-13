@@ -1,0 +1,80 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --blue: #2e8ae6;
+  --gray: #ebebeb;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  width: 32rem;
+  max-width: 76.8rem;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+header span {
+  background-color: var(--blue);
+  padding: 1rem;
+  text-align: center;
+  width: 30%;
+}
+
+header span object {
+  width: 50%;
+  margin: 0 auto;
+  filter: invert(100%) sepia(3%) saturate(2%) hue-rotate(2deg) brightness(117%) contrast(100%);
+}
+
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.listContainer ul {
+  list-style-type: none;
+  width: 100%;
+}
+
+.listContainer ul object {
+  width: 1%;
+}
+
+.listContainer #listName,
+.listContainer #addNewTask,
+.listContainer .task {
+  display: flex;
+  padding: 1rem;
+  border: 0.1rem solid var(--gray);
+  align-items: center;
+  justify-content: space-between;
+  background-color: coral;
+}
+
+.listContainer .task input[type="checkbox"] {
+  margin-right: 2rem;
+}
+
+.listContainer .task a {
+  position: absolute;
+  right: 0;
+}

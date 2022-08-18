@@ -1,65 +1,97 @@
 import utils from './utils.js';
 
-const readTask = () => {
-  return JSON.parse(localStorage.getItem('tasks')) ?? [];
-};
+export default class Tasks {
+  tasks = [];
 
-export const tasks = readTask();
-const container = utils.qs('.listContainer');
+  constructor(tasks) {
+    tasks?.sort((a, b) => a.index - b.index).forEach((t) => this.addTask(t));
+  }
 
-export class Task {
-  constructor(task) {
-    addTask(task);
-    storeTask();
+  addTask(task) {
+    this.tasks.push(task);
+    this.appendToList(task);
+  }
+
+  appendToList(task) {
+    const li = utils.createElement({
+      tagName: 'li',
+      class: 'task',
+      draggable: true,
+      data: { tabIndex: task.index },
+    });
+    const button = utils.createElement({
+      tagName: 'button',
+      class: task.completed ? 'pressed' : null,
+    });
+    let svg = utils.createElement({
+      tagName: 'svg',
+      class: 'checkbox',
+    });
+    svg.appendChild(
+      utils.createElement({
+        tagName: 'use',
+        src: '../public/img/icons.svg#icon-check',
+      })
+    );
+    button.appendChild(svg);
+    li.appendChild(button);
+    li.appendChild(
+      utils.createElement({
+        tagName: 'p',
+        contenteditable: true,
+        textContent: task.description,
+      })
+    );
+    let a = utils.createElement({
+      tagName: 'a',
+      href: '#',
+      class: ['trash-icon', 'hidden'],
+    });
+    svg = utils.createElement({
+      tagName: 'svg',
+      class: 'checkbox',
+    });
+    svg.appendChild(
+      utils.createElement({
+        tagName: 'use',
+        src: '../public/img/icons.svg#icon-trash',
+      })
+    );
+    a.appendChild(svg);
+    li.appendChild(a);
+    a = utils.createElement({
+      tagName: 'a',
+      href: '#',
+    });
+    svg = utils.createElement({
+      tagName: 'svg',
+      class: ['checkbox', 'drag-anchor'],
+    });
+    svg.appendChild(
+      utils.createElement({
+        tagName: 'use',
+        src: '../public//img/icons.svg#icon-more-vert',
+      })
+    );
+    a.appendChild(svg);
+    li.appendChild(a);
+    utils.qs('.listContainer ul').appendChild(li);
+
+    utils.qs('#refresh').dataset.items = utils.qsa('.task').length;
+  }
+
+  remove(index) {
+    const taskIndex = this.tasks.findIndex((t) => t.index === index);
+
+    this.tasks.splice(taskIndex, 1);
+
+    const badge = utils.qs('#refresh');
+    const tasks = utils.qsa('.task').length;
+
+    if (tasks) {
+      badge.dataset.items = utils.qsa('.task').length;
+    } else {
+      delete badge.dataset.items;
+    }
   }
 }
-
-export const addTask = (task, completed = false) => {
-  const li = utils.createElement({
-    tagName: 'li',
-    class: 'task',
-  });
-
-  li.appendChild(
-    utils.createElement({
-      tagName: 'input',
-      type: 'checkbox',
-      checked: completed,
-    })
-  );
-  li.appendChild(
-    utils.createElement({
-      tagName: 'p',
-      contenteditable: true,
-      textContent: task,
-    })
-  );
-  const a = utils.createElement({ tagName: 'a' });
-  a.appendChild(
-    utils.createElement({
-      tagName: 'object',
-      data: './img/three_dots.svg',
-    })
-  );
-  li.appendChild(a);
-  container.appendChild(li);
-
-  tasks.push({
-    task,
-    completed: false,
-  });
-};
-
-export const storeTask = () => {
-  localStorage.setItem('tasks', JSON.stringify(tasks));
-};
-
-export const readTasks = () => {
-  return JSON.parse(localStorage.getItem('tasks')) ?? [];
-};
-
-export const displayTasks = () => {
-  tasks.forEach((task) => {
-    new Task(task.task, task.completed);
-  });
-};

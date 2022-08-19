@@ -1,10 +1,14 @@
 import utils from './utils.js';
+import LocalStorage from './localStorage.js';
 
 export default class Tasks {
   tasks = [];
 
-  constructor(tasks) {
-    tasks?.sort((a, b) => a.index - b.index).forEach((t) => this.addTask(t));
+  constructor() {
+    LocalStorage.init();
+    const tasks = LocalStorage.read();
+    tasks.sort((a, b) => a.index - b.index).forEach((t) => this.addTask(t));
+    this.tasks = tasks;
   }
 
   addTask(task) {
@@ -74,6 +78,8 @@ export default class Tasks {
     utils.qs('.listContainer ul').appendChild(li);
 
     utils.qs('#refresh').dataset.items = utils.qsa('.task').length;
+
+    LocalStorage.store(this.tasks);
   }
 
   remove(index) {
@@ -89,5 +95,23 @@ export default class Tasks {
     } else {
       delete badge.dataset.items;
     }
+
+    this.tasks.forEach((task, index) => {
+      task.index = index;
+    });
+
+    LocalStorage.store(this.tasks);
+  }
+
+  update(index, property, newValue) {
+    const task = this.tasks.find((t) => t.index === index);
+
+    if (property === 'completed') {
+      task.completed = !task.completed;
+    } else {
+      task[property] = newValue;
+    }
+
+    LocalStorage.store(this.tasks);
   }
 }

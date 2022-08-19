@@ -1,9 +1,8 @@
 import utils from './modules/utils.js';
 import Tasks from './modules/Tasks.js';
-import taskObjects from './modules/taskObjects.js';
 import './index.css';
 
-const tasks = new Tasks(taskObjects);
+const tasks = new Tasks();
 
 const list = utils.qs('.listContainer ul');
 const addTask = utils.qs('#addNewTask');
@@ -19,18 +18,16 @@ list.addEventListener('click', (e) => {
   button.classList.toggle('pressed');
 
   const index = +button.parentElement.dataset.tabIndex;
-  const task = tasks.tasks.find((t) => t.index === index);
-  task.completed = !task.completed;
+  tasks.update(index, 'completed');
 });
 
 // Adding a new task
 const createNewTask = (target) => {
-  const task = {
+  tasks.addTask({
     description: target.textContent,
     completed: false,
-    index: Math.max(...tasks.tasks.map((t) => t.index)) + 1,
-  };
-  tasks.addTask(task);
+    index: tasks.tasks.length,
+  });
   target.textContent = '';
   target.blur();
 };
@@ -106,7 +103,6 @@ deleteButton.addEventListener('click', () => {
 // receiving focus when the mouse is clicked on the same line the element is, but not on the element
 // itself
 list.addEventListener('click', (e) => {
-  // I'm getting bored of setting the same event over and over again
   const { target } = e;
 
   if (target.tagName !== 'P' || !target.closest('li.task') || !target.contentEditable) {
@@ -134,14 +130,13 @@ list.addEventListener(
 list.addEventListener('keypress', (e) => {
   const keyCode = e.which || e.keyCode;
   const { target } = e;
+  const li = target.closest('li.task');
 
-  if (!target.contentEditable) return;
+  if (!target.contentEditable || !li) return;
 
   if (keyCode === 13) {
-    const li = target.closest('li.task');
     const index = +li.dataset.tabIndex;
-    const task = tasks.tasks.find((t) => t.index === index);
-    task.description = target.textContent;
+    tasks.update(index, 'description', target.textContent);
     li.classList.remove('focused');
     target.blur();
   }

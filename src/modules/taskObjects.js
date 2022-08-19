@@ -1,6 +1,6 @@
 export default [
   {
-    description: `Wash the car`,
+    description: 'Wash the car',
     completed: false,
     index: 1,
   },

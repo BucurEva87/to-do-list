@@ -38,7 +38,7 @@ const createNewTask = (target) => {
 addTask.addEventListener('keyup', (e) => {
   const keyCode = e.which || e.keyCode;
 
-  if (keyCode == 13) {
+  if (keyCode === 13) {
     createNewTask(e.target);
   }
 });
@@ -93,7 +93,7 @@ list.addEventListener('click', (e) => {
 });
 
 // Delete all selected tasks
-deleteButton.addEventListener('click', (e) => {
+deleteButton.addEventListener('click', () => {
   utils.qsa('button.pressed').forEach((b) => {
     const li = b.closest('li.task');
 
@@ -103,17 +103,15 @@ deleteButton.addEventListener('click', (e) => {
 });
 
 // Apperently we DO have a problem with WebKit browsers when it comes to contenteditable elements
-// receiving focus when the mouse is clicked on the same line the element is, but not on the element itself
+// receiving focus when the mouse is clicked on the same line the element is, but not on the element
+// itself
 list.addEventListener('click', (e) => {
   // I'm getting bored of setting the same event over and over again
   const { target } = e;
 
-  if (
-    target.tagName !== 'P' ||
-    !target.closest('li.task') ||
-    !target.contentEditable
-  )
+  if (target.tagName !== 'P' || !target.closest('li.task') || !target.contentEditable) {
     return;
+  }
 
   target.contentEditable = true;
   target.focus();
@@ -123,16 +121,13 @@ list.addEventListener(
   (e) => {
     const { target } = e;
 
-    if (
-      target.tagName !== 'P' ||
-      !target.closest('li.task') ||
-      !target.contentEditable
-    )
+    if (target.tagName !== 'P' || !target.closest('li.task') || !target.contentEditable) {
       return;
+    }
 
     target.contentEditable = false;
   },
-  true
+  true,
 );
 
 // Rename a task
@@ -142,7 +137,7 @@ list.addEventListener('keypress', (e) => {
 
   if (!target.contentEditable) return;
 
-  if (keyCode == 13) {
+  if (keyCode === 13) {
     const li = target.closest('li.task');
     const index = +li.dataset.tabIndex;
     const task = tasks.tasks.find((t) => t.index === index);

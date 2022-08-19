@@ -9,7 +9,9 @@
   <body>
     <header>
       <div id="logo">
-        <svg><use xlink:href="../public/img/icons.svg#icon-check"></use></svg>
+        <svg>
+          <use xlink:href="../public/assets/img/icons.svg#icon-check"></use>
+        </svg>
         <h1>minimalist</h1>
       </div>
     </header>
@@ -20,14 +22,16 @@
           <p>Today's TODO list</p>
           <a id="refresh" href="#">
             <svg>
-              <use xlink:href="../public/img/icons.svg#icon-refresh"></use>
+              <use
+                xlink:href="../public/assets/img/icons.svg#icon-refresh"
+              ></use>
             </svg>
           </a>
         </li>
         <li id="addNewTask">
           <p contenteditable data-placeholder="Add a task to your list..."></p>
           <a href="#">
-            <object data="../public/img/return_icon.png"></object>
+            <object data="../public/assets/img/return_icon.png"></object>
           </a>
         </li>
       </ul>

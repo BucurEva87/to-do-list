@@ -9,14 +9,10 @@ export default class Tasks {
 
   addTask(task) {
     this.tasks.push(task);
-    this.appendToList(task);
-  }
 
-  appendToList(task) {
     const li = utils.createElement({
       tagName: 'li',
       class: 'task',
-      draggable: true,
       data: { tabIndex: task.index },
     });
     const button = utils.createElement({
@@ -30,8 +26,8 @@ export default class Tasks {
     svg.appendChild(
       utils.createElement({
         tagName: 'use',
-        src: '../public/img/icons.svg#icon-check',
-      })
+        src: '../public/assets/img/icons.svg#icon-check',
+      }),
     );
     button.appendChild(svg);
     li.appendChild(button);
@@ -40,7 +36,7 @@ export default class Tasks {
         tagName: 'p',
         contenteditable: true,
         textContent: task.description,
-      })
+      }),
     );
     let a = utils.createElement({
       tagName: 'a',
@@ -54,8 +50,8 @@ export default class Tasks {
     svg.appendChild(
       utils.createElement({
         tagName: 'use',
-        src: '../public/img/icons.svg#icon-trash',
-      })
+        src: '../public/assets/img/icons.svg#icon-trash',
+      }),
     );
     a.appendChild(svg);
     li.appendChild(a);
@@ -70,8 +66,8 @@ export default class Tasks {
     svg.appendChild(
       utils.createElement({
         tagName: 'use',
-        src: '../public//img/icons.svg#icon-more-vert',
-      })
+        src: '../public/assets/img/icons.svg#icon-more-vert',
+      }),
     );
     a.appendChild(svg);
     li.appendChild(a);

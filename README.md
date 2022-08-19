@@ -11,7 +11,7 @@
 
 ## Live Demo
 
-[Live Demo Link](https://bucureva87.github.io/to-do-list/)
+[Live Demo Link](https://bucureva87.github.io/to-do-list/dist/)
 
 ## Live Preview
 

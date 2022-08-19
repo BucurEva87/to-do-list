@@ -91,12 +91,9 @@ list.addEventListener('click', (e) => {
 
 // Delete all selected tasks
 deleteButton.addEventListener('click', () => {
-  utils.qsa('button.pressed').forEach((b) => {
-    const li = b.closest('li.task');
+  utils.qsa('button.pressed').forEach((b) => b.closest('li.task').remove());
 
-    li.remove();
-    tasks.remove(+li.dataset.tabIndex);
-  });
+  tasks.tasks.filter((t) => t.completed).forEach((t) => tasks.remove(t.index));
 });
 
 // Apperently we DO have a problem with WebKit browsers when it comes to contenteditable elements

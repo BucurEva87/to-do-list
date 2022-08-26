@@ -8,6 +8,25 @@
 
 - HTML, CSS, JavaScript
 - Webpack
+- Jest
+- NPM
+- Node
+
+## Getting Started
+
+In order to obtain a local copy of this repository run:
+
+- `git clone https://github.com/BucurEva87/to-do-list.git`
+- `cd to-do-list`
+
+### Prerequisites
+
+- Install Node and Node Package Manager (NPM)
+- Install all the project dependencies running `npm i`
+
+### Running tests
+
+- You can run test suites on this project by running `npm test`
 
 ## Live Demo
 

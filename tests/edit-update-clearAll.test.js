@@ -66,16 +66,27 @@ describe('Tasks class', () => {
   });
 
   test('when the clearAll button triggers the click event all the tasks are removed from the Tasks array', () => {
-    utils.qsa('ul li.task').forEach((t) => tasks.remove(t.dataset.tabIndex));
+    utils
+      .qsa('li.task')
+      .reverse()
+      .forEach((t) => {
+        const index = +t.dataset.tabIndex;
+        const task = tasks.tasks.find((item) => item.index === index);
 
-    expect(tasks.tasks).toHaveLength(0);
+        if (task.completed) {
+          tasks.remove(index);
+          t.remove();
+        }
+      });
+
+    expect(tasks.tasks).toHaveLength(2);
   });
 
   test('when the clearAll button triggers the click event all the tasks are removed from the DOM element', () => {
-    expect(utils.qsa('ul li.tasks')).toHaveLength(0);
+    expect(utils.qsa('ul li.task')).toHaveLength(tasks.tasks.length);
   });
 
   test('when the clearAll button triggers the click event all the tasks are removed from the LocalStorage', () => {
-    expect(JSON.parse(localStorage.getItem('tasks'))).toHaveLength(0);
+    expect(JSON.parse(localStorage.getItem('tasks'))).toHaveLength(tasks.tasks.length);
   });
 });

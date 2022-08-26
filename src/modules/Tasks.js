@@ -97,7 +97,7 @@ export default class Tasks {
     }
 
     this.tasks.forEach((task, index) => {
-      task.index = index;
+      task.index = index + 1;
     });
 
     LocalStorage.store(this.tasks);

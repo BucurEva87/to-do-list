@@ -86,7 +86,7 @@ describe('Tasks class', () => {
     expect(utils.qsa('ul li.task')).toHaveLength(tasks.tasks.length);
   });
 
-  test('when the clearAll button triggers the click event all the tasks are removed from the LocalStorage', () => {
+  test('when the clearAll button triggers the click event all the tasks are removed from the LocalStorag', () => {
     expect(JSON.parse(localStorage.getItem('tasks'))).toHaveLength(tasks.tasks.length);
   });
 });

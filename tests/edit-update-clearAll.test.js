@@ -82,7 +82,7 @@ describe('Tasks class', () => {
     expect(tasks.tasks).toHaveLength(2);
   });
 
-  test('when the clearAll button triggers the click event all the tasks are removed from the DOM element', () => {
+  test('when the clearAll button triggers the click event all the tasks are removed from the DOM elemen', () => {
     expect(utils.qsa('ul li.task')).toHaveLength(tasks.tasks.length);
   });
 
